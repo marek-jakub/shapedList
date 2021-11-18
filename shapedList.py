@@ -68,3 +68,24 @@ class ShapeList:
                 inserted = True
 
         return inserted
+
+    def search(self, item):
+        """ Returns the index of the item if found, otherwise returns -1. The search
+         is linear, if found, the index marks the first item found. """
+        item_index: int = -1
+        search_index = index(item[0], self.shape_list[1:27])
+
+        letter_load = 0
+        if search_index != -1:
+            letter_load = self.shape_list[search_index + self.shape_nodes]
+
+        if letter_load != 0:
+            i = (search_index + 1) * self.shape_nodes
+            found = False
+            while i < ((search_index + 1) * self.shape_nodes) + self.shape_nodes and not found:
+                if self.shape_list[i] == item:
+                    found = True
+                    item_index = i
+                i += 1
+
+        return item_index
