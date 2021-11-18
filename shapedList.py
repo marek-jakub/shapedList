@@ -89,3 +89,42 @@ class ShapeList:
                 i += 1
 
         return item_index
+
+    def remove(self, item):
+        """ The first word found by linear search and equal to the item is replaced by None
+         and True returned, if not found, False is returned."""
+        removed = False
+        item_index: int = -1
+        sublist_index = index(item[0], self.shape_list[1:27])
+
+        letter_load = 0
+        if sublist_index != -1:
+            letter_load = self.shape_list[sublist_index + self.shape_nodes]
+
+        found = False
+        if letter_load != 0:
+            i = (sublist_index + 1) * self.shape_nodes
+            while i < ((sublist_index + 1) * self.shape_nodes) + self.shape_nodes and not found:
+                if self.shape_list[i] == item:
+                    found = True
+                    item_index = i
+                i += 1
+
+        if item_index != -1 and found:
+            self.shape_list[item_index] = None
+            removed = True
+            self.shape_list[sublist_index + self.shape_nodes] -= 1
+
+        # Check if containers could be resized to decrease the overall list size.
+        if removed:
+            max_load = max(self.shape_list[self.shape_nodes + 1: self.shape_nodes + self.containers])
+            # Decrease each sublist of words by 1
+            if self.shape_nodes - max_load > 5 and self.shape_nodes - 5 > self.containers:
+                # It has to performed from the end of the list, to correctly point to empty
+                # parts of containers.item[0]
+                for i in range(self.containers, -1, -1):
+                    self.shape_list.pop((self.shape_nodes * i) - 1)
+                self.shape_nodes -= 1
+                self.shape_list[0] = self.shape_nodes
+
+        return removed
