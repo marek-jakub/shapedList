@@ -2,6 +2,14 @@
 # Text storing based on 3-D shape list evaluation.
 # 2021
 
+def index(letter, alphabet):
+    insertion_index = -1
+    for i in range(26):
+        if alphabet[i] == letter.lower():
+            insertion_index = i + 1
+
+    return insertion_index
+
 
 class ShapeList:
     def __init__(self):
