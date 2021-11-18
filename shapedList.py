@@ -26,3 +26,13 @@ class ShapeList:
         for i in range(1, self.shape_nodes, 1):
             self.shape_list[i] = chr(i + 96)
             self.shape_list[i + self.shape_nodes] = 0
+
+    def is_empty(self):
+        """ The load of inserted words for each letter reside at indices i + shape_size.
+         If they are all 0, containers are empty (returns true). """
+        is_empty = True
+        for i in range(1, self.shape_nodes, 1):
+            if self.shape_list[i + self.shape_nodes] != 0:
+                is_empty = False
+                break
+        return is_empty
