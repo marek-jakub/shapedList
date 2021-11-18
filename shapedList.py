@@ -36,3 +36,35 @@ class ShapeList:
                 is_empty = False
                 break
         return is_empty
+
+    def insert(self, item):
+        """ Inserts an item at the range of indices which account for a given first letter
+         of the item. Returns False if the insertion is not successful. """
+        inserted = False
+        insertion_index = index(item[0], self.shape_list[1:27])
+
+        if insertion_index != -1:
+            letter_load = self.shape_list[insertion_index + self.shape_nodes]
+            # If the load of the sublist is getting close to the size of the 3-D shape,
+            # i.e. soon to be filled in, it needs to be enlarged. The difference is
+            # arbitrary, currently it is 5.
+            if self.shape_nodes - letter_load < self.shape_nodes - (self.shape_nodes - 5):
+                increased_by = self.shape_nodes // 2
+                increase_list = list(None for _ in range(increased_by))
+                # It has to be performed from the end of the list to correctly point to
+                # empty parts of containers.
+                for i in range(self.containers, -1, -1):
+                    self.shape_list[(self.shape_nodes * i) + self.shape_nodes:
+                                    (self.shape_nodes * i) + self.shape_nodes] = increase_list
+                self.shape_nodes += increased_by
+                self.shape_list[0] = self.shape_nodes
+
+            # After checking the load for the letter, the word can be inserted.
+            letter_start_index = (insertion_index + 1) * self.shape_nodes
+            if letter_load < self.shape_nodes and \
+                    self.shape_list[letter_start_index + letter_load] is None:
+                self.shape_list[letter_start_index + letter_load] = item
+                self.shape_list[insertion_index + self.shape_nodes] += 1
+                inserted = True
+
+        return inserted
