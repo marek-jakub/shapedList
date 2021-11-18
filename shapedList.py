@@ -128,3 +128,15 @@ class ShapeList:
                 self.shape_list[0] = self.shape_nodes
 
         return removed
+
+    def show(self, letter):
+        """ The sublist of words starting with the letter is returned, if it is empty, an empty
+        list is returned. """
+        sublist_index = index(letter, self.shape_list[1:27])
+
+        if sublist_index != -1:
+            letter_load = self.shape_list[sublist_index + self.shape_nodes]
+            print(self.shape_list[(sublist_index + 1) * self.shape_nodes:
+                                  (sublist_index + 1) * self.shape_nodes + letter_load])
+        else:
+            print("Enter a letter of alphabet")
