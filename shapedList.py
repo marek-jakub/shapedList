@@ -140,3 +140,12 @@ class ShapeList:
                                   (sublist_index + 1) * self.shape_nodes + letter_load])
         else:
             print("Enter a letter of alphabet")
+
+    def show_stats(self):
+        """ Shows the length of the list holding the data (size of all containers), number of
+          inserted words and the load of each container. """
+        print("Containers have size: ", len(self.shape_list), " number of inserted words: ",
+              sum(self.shape_list[self.shape_nodes + 1: self.shape_nodes + self.containers]))
+        print("Letter loads:")
+        for i in range(1, 27):
+            print(self.shape_list[i], " - ", self.shape_list[self.shape_nodes + i])
